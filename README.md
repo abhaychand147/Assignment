@@ -5,7 +5,7 @@ This project is a Python application that generates a waveform based on specifed
 
 ## Prerequisites
 Before you run the code, ensure you have the following installed:
-- Python 3.8 or higher
+- Python 3.11 or higher
 - pip (Python package installer)
 
 ## Installation Instructions
@@ -16,19 +16,19 @@ Before you run the code, ensure you have the following installed:
 ```
 2. **Install the requirements file**:
 ```bash
-    pip3 install -r requirements/requirements.txt
+    pip install -r requirements/requirements.txt
 ```
 
 ## Running application
 1. **Running the application from terminal**:
 To run the code locally, run the following command -
 ```bash
-    python3 util/main.py
+    python util/main.py
 ```
 This will ask for the required input parameters in the command line.
 To know what parameters it expects, run the help command -
 ```bash
-    python3 util/main.py --help
+    python util/main.py --help
 ```
 
 2. **Installing the application as package**:
