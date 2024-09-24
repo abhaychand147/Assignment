@@ -11,8 +11,8 @@ Before you run the code, ensure you have the following installed:
 ## Installation Instructions
 1. **Clone the Repository**:
 ```bash
-    git clone https://github.com/yourusername/my_project.git
-    cd my_project
+    git clone https://github.com/abhaychand147/Assignment.git
+    cd Assignment
 ```
 2. **Install the requirements file**:
 ```bash
