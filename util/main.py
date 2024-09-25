@@ -39,7 +39,7 @@ class PositiveFloat(click.ParamType):
 )
 @click.option(
     "--output-path",
-    prompt="Output Path (folder/filename.csv)",
+    prompt="Output Path directory",
     default="result",
     type=str,
     help="Output path directory for saving waveform result.",

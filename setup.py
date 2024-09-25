@@ -8,6 +8,7 @@ setup(
         "Click",
         "numpy",
         "matplotlib",
+        "pandas"
     ],
     entry_points="""
         [console_scripts]
