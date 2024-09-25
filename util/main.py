@@ -2,30 +2,47 @@ import click
 from core.waveform import Waveform
 
 
+class PositiveFloat(click.ParamType):
+    name = "positive float"
+
+    def convert(self, value, param, ctx):
+        try:
+            float_value = float(value)
+            if float_value <= 0:
+                raise click.BadParameter("Must be a positive value.")
+            return float_value
+        except ValueError:
+            self.fail(f"{value} is not a valid float.")
+
+
 @click.command()
 @click.option(
-    "--raise-time",
-    prompt="Please provide raise time duration",
-    type=float,
-    help="Raise Time",
+    "--rise-time",
+    prompt="Rise Time (Must be greater than zero)",
+    type=PositiveFloat(),
+    help="Rise Time",
 )
 @click.option(
     "--fall-time",
-    prompt="Please provide fall time duration",
-    type=float,
+    prompt="Fall time (Must be greater than zero)",
+    type=PositiveFloat(),
     help="Fall Time",
 )
-@click.option("--period", prompt="Please provide period", type=int, help="Period")
 @click.option(
-    "--pulse-width", prompt="Please provide pulse width", type=float, help="Pulse Width"
+    "--period", prompt="Period", type=PositiveFloat(), help="Period"
+)  # NOQA: E501
+@click.option(
+    "--pulse-width",
+    prompt="Pulse Width",
+    type=PositiveFloat(),
+    help="Pulse Width",  # NOQA: E501
 )
 @click.option(
     "--output-path",
-    prompt="Please provide output path and file name in for csv file",
-    default="result/waveform_out.csv",
+    prompt="Output Path (folder/filename.csv)",
+    default="result",
     type=str,
-    help="Output path for saving waveform result. Path should \
-        be in out_path/out_filename.csv format",  # NOQA: E501
+    help="Output path directory for saving waveform result.",
 )
 @click.option(
     "--show-plot",
@@ -35,7 +52,7 @@ from core.waveform import Waveform
     help="If you want to see the plot",
 )
 def get_waveform(
-    raise_time: float,
+    rise_time: float,
     fall_time: float,
     pulse_width: float,
     period: int,
@@ -46,24 +63,35 @@ def get_waveform(
     based on the specified arguements.
 
     Args:
-        raise_time (float): Duration for waveform to rise from 10% to 90% of amplitude.
-        fall_time (float):  Duration for waveform to fall from 90% back to 10% of amplitude.
+        rise_time (float): Duration for waveform to rise
+            from 10% to 90% of amplitude.
+        fall_time (float):  Duration for waveform to fall
+          from 90% back to 10% of amplitude.
         pulse_width (float): Duration between 50% rise to 50% down.
         period (float): total time taken for one complete cycle of the waveform.
-        output_path (str): Output Path to write generated waveform.
-            <output_path>/<output_filename>.csv
+        output_path (str): Output Path Directory to write generated waveform.
+            <output_path>
         show_plot (bool): If you want to generate a plot. Defaults to False.
     Returns:
         None.
     """
-    waveform_obj = Waveform(raise_time, fall_time, pulse_width, period, output_path)
-    waveform_obj.generate_waveform()
+    for param_name, param in zip(
+        ["rise_time", "fall_time", "pulse_width", "period"],
+        [rise_time, fall_time, pulse_width, period],
+    ):
+        if param <= 0:
+            raise ValueError(f"{param_name} should be positive!")
 
+    waveform_obj = Waveform(rise_time, fall_time, pulse_width, period, output_path)
+
+    # Setting showplot
     if show_plot:
         waveform_obj.activatePlot()
 
+    # calling generate waveform
+    waveform_obj.generate_waveform()
+
 
 if __name__ == "__main__":
-    """Calling get_waveform function
-    """
+    """Calling get_waveform function"""
     get_waveform()

@@ -23,12 +23,12 @@ Before you run the code, ensure you have the following installed:
 1. **Running the application from terminal**:
 To run the code locally, run the following command -
 ```bash
-    python util/main.py
+    python -m util.main
 ```
 This will ask for the required input parameters in the command line.
 To know what parameters it expects, run the help command -
 ```bash
-    python util/main.py --help
+    python -m util.main --help
 ```
 
 2. **Installing the application as package**:
